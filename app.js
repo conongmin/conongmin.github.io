@@ -39,7 +39,7 @@
       }).join("") + '</div></section>' +
       '<section class="block"><h2>툴</h2><div class="skills">' +
       D.skills.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join("") + '</div></section>' +
-      '<section class="block contact" id="contact"><h2>연락</h2><a href="mailto:' + esc(D.email) + '">' + esc(D.email) + '</a></section>';
+      '<section class="block contact" id="contact"><h2>연락</h2><a href="mailto:' + esc(D.email) + '">' + esc(D.email) + '</a><p class="channel"><a href="' + esc(D.channel) + '" target="_blank" rel="noopener">유튜브 채널 ↗</a></p></section>';
 
     var rail = app.querySelector(".rail");
     function step(dir) { rail.scrollBy({ left: dir * Math.max(320, rail.clientWidth * 0.6), behavior: calm ? "auto" : "smooth" }); }
@@ -83,6 +83,7 @@
       '<div><a class="back" href="#/">← 전체 작품</a><h1>' + esc(w.title) + '</h1><p class="kind">' + esc(w.badge) + '</p><dl>' +
       rows.map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join("") + '</dl><ul>' +
       w.points.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join("") + '</ul>' +
+      (w.yt ? '<a class="yt" href="https://www.youtube.com/' + esc(w.yt) + '" target="_blank" rel="noopener">유튜브에서 보기 ↗</a>' : '') +
       '<div class="pager"><a href="#/works/' + prev.id + '">← ' + esc(prev.title) + '</a><a href="#/works/' + next.id + '">' + esc(next.title) + ' →</a></div>' +
       '</div></article>';
     document.title = w.title + " · 노호민 포트폴리오";

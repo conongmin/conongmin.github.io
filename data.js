@@ -12,7 +12,7 @@ window.PORTFOLIO = {
   ],
   works: [
     {
-      id: "dream", title: "꿈꾸던 나, 곧 방송됩니다", badge: "우수상", kind: "AI 숏폼", ratio: "9:16", length: "31초",
+      id: "dream", yt: "shorts/zmBVJskKwwg", title: "꿈꾸던 나, 곧 방송됩니다", badge: "우수상", kind: "AI 숏폼", ratio: "9:16", length: "31초",
       videos: [{ file: "dream", youtube: "" }],
       context: "제7회 하이라이트TV AI 공모전 숏폼 부문",
       result: "우수상",
@@ -38,10 +38,10 @@ window.PORTFOLIO = {
       ]
     },
     {
-      id: "culprit", title: "범인은 이 안에 있다", badge: "트렌드 기획", kind: "AI 숏폼", ratio: "9:16", length: "56초",
+      id: "culprit", yt: "shorts/-DLi2M10JgA", title: "범인은 이 안에 있다", badge: "공모전 출품", kind: "AI 숏폼", ratio: "9:16", length: "56초",
       videos: [{ file: "culprit", youtube: "" }],
-      context: "나무엑스 AI 숏폼 공모전용 제작",
-      result: "공모전용 제작",
+      context: "나무엑스 AI 숏폼 공모전",
+      result: "출품",
       role: "기획, 트렌드 분석, AI 생성, 나레이션, 편집 단독",
       tools: "Artlist (Nano Banana 2.1, Kling v3 Pro), Google AI Studio (Gemini TTS), Gemini (BGM), Claude, Premiere Pro",
       points: [
@@ -65,7 +65,7 @@ window.PORTFOLIO = {
       ]
     },
     {
-      id: "firston", title: "상상했던 나, 오늘 첫 방송", badge: "AI 광고", kind: "AI 영상광고", ratio: "16:9", length: "61초",
+      id: "firston", yt: "watch?v=2mueAWwCcVY", title: "상상했던 나, 오늘 첫 방송", badge: "AI 광고", kind: "AI 영상광고", ratio: "16:9", length: "61초",
       videos: [{ file: "firston", youtube: "" }],
       context: "제7회 하이라이트TV AI 공모전 영상광고 부문",
       result: "응모",
