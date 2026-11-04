@@ -6,6 +6,7 @@ window.PORTFOLIO = {
   eyebrow: "기획부터 촬영, AI, 편집까지",
   lead: "메시지를 먼저 설계하고, 끝까지 직접 완성합니다",
   email: "nhm527@naver.com",
+  channel: "https://www.youtube.com/@conongmin",
   results: [
     { big: "우수상", text: "제7회 하이라이트TV AI 공모전 숏폼 부문" },
     { big: "4일", text: "농협 추석 홍보 영상 2편, 의뢰부터 최종본까지" },
@@ -49,6 +50,7 @@ window.PORTFOLIO = {
         "9~10월 SNS 트렌드와 밈을 먼저 정리했습니다.",
         "수명이 짧은 음원 대신 포맷의 구조를 빌려 기획했습니다.",
         "제품 제작 가이드에서 승인된 기능만 사용해 브랜드 조건을 지켰습니다.",
+        "나레이션과 AI 대답 음성은 Gemini TTS로, 대사 장면은 Kling v3 Pro로, 배경음악은 Gemini로 만들었습니다."
       ]
     },
     {
