@@ -27,6 +27,20 @@ window.PORTFOLIO = {
       ]
     },
     {
+      id: "seven", title: "07:00", badge: "뮤직비디오", kind: "AI 뮤직비디오", ratio: "9:16", length: "75초",
+      videos: [{ file: "seven", youtube: "" }],
+      context: "2026 한국세라믹기술원 AI 영상 공모전 「세라믹이 사라진 세상」",
+      result: "제작 완료",
+      role: "기획, 가사, AI 생성, 타이포그래피, 편집 단독",
+      tools: "Seedance 2.0, Seedance 2.5, Suno, Blender, After Effects, Remotion, Real-ESRGAN, Claude",
+      points: [
+        "세라믹이 사라진 세상을 아침 7시에 일상이 무너지는 이야기로 풀고, 타일, 애자, 적층세라믹콘덴서 같은 실제 부품을 장면 속 라벨로 짚었습니다.",
+        "노래를 단어 시각까지 재어 자막을 낱말 단위로 박자에 맞추고, 인물을 분리한 마스크로 글자를 사람 뒤로 보냈습니다.",
+        "립싱크가 음원과 어긋난 구간은 입 모양을 프레임별로 확인해 21음절에 맞춰 영상 타이밍을 다시 배치했습니다.",
+        "시간 자막과 모래로 흩어지는 글자, 글자 벽으로 된 상자 안을 도는 타이포그래피를 Blender로 만들었습니다."
+      ]
+    },
+    {
       id: "varo", title: "바로피트니스 홍보 숏폼", badge: "직접 촬영", kind: "홍보 숏폼", ratio: "9:16", length: "50초",
       videos: [{ file: "varo", youtube: "" }],
       context: "헬스장 공간과 시설 소개",
