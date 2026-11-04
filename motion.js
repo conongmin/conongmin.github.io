@@ -9,10 +9,10 @@
 
   // size: 화면 기준 글자 크기, y: 세로 위치, speed: 초당 픽셀, mode: 외곽선 또는 면
   var ROWS = [
-    { text: "기획 촬영 AI 편집 ", size: 0.17, y: 0.25, speed: 16, dir: -1, mode: "stroke", weight: 800, scroll: 0.16 },
+    { text: "첫 1초 끝까지 ", size: 0.17, y: 0.25, speed: 16, dir: -1, mode: "stroke", weight: 800, scroll: 0.16 },
     { text: "꿈꾸던 나, 곧 방송됩니다 · 범인은 이 안에 있다 · 쓰고, 줄이고, 만나요 · 바로피트니스 · ", size: 0.024, y: 0.34, speed: 22, dir: 1, mode: "fill", weight: 500, scroll: 0.06 },
-    { text: "MESSAGE FIRST ", size: 0.145, y: 0.66, speed: 12, dir: 1, mode: "fill", weight: 800, scroll: 0.1 },
-    { text: "메시지 콘티 후킹 자막 납품 ", size: 0.06, y: 0.83, speed: 20, dir: -1, mode: "stroke", weight: 700, scroll: 0.22 }
+    { text: "HOOK CUT LOOP ", size: 0.145, y: 0.66, speed: 12, dir: 1, mode: "fill", weight: 800, scroll: 0.1 },
+    { text: "멈추게 하고 끝까지 보게 하고 다시 보게 ", size: 0.06, y: 0.83, speed: 20, dir: -1, mode: "stroke", weight: 700, scroll: 0.22 }
   ];
 
   var W = 0, H = 0, dpr = 1, rows = [], start = 0, last = 0;
