@@ -147,6 +147,8 @@
       (w.yt ? '<a class="yt" href="https://www.youtube.com/' + esc(w.yt) + '" target="_blank" rel="noopener">유튜브에서 보기 ↗</a>' : '') +
       '<div class="pager"><a href="#/works/' + prev.id + '">← ' + esc(prev.title) + '</a><a href="#/works/' + next.id + '">' + esc(next.title) + ' →</a></div>' +
       '</div></article>';
+    var enterEl = app.querySelector(".detail.enter");
+    if (enterEl) setTimeout(function () { enterEl.classList.remove("enter"); }, 1600);
     document.title = w.title + " · 노호민 포트폴리오";
     window.scrollTo(0, 0);
   }
