@@ -15,7 +15,7 @@
     var f = w.videos[0].file;
     var win = /상$/.test(w.result) ? " win" : "";
     return '<a class="card" style="--r:' + r + '" href="#/works/' + w.id + '">' +
-      '<span class="frame"><img src="media/' + f + '.jpg" alt="" loading="lazy">' +
+      '<span class="frame"><img src="media/' + f + '.jpg" alt="">' +
       '<video data-src="media/' + f + '-preview.mp4" muted loop playsinline preload="none"></video>' +
       '<span class="badge' + win + '">' + esc(w.badge) + '</span></span>' +
       '<h3>' + esc(w.title) + '</h3><p>' + esc(w.kind) + ' · ' + esc(w.length) + '</p></a>';
