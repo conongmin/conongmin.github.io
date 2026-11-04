@@ -18,27 +18,29 @@ window.initGallery = function (stage) {
   function size() {
     W = window.innerWidth; H = window.innerHeight;
     var phone = W < 800;
-    var maxH = Math.min(H * (phone ? 0.62 : 0.68), H - 190);
+    var maxH = Math.min(H * (phone ? 0.6 : 0.64), H - 210);
     cards.forEach(function (c) {
       var r = parseFloat(c.dataset.r);
       var w = Math.min(maxH * r, W * (phone ? 0.84 : 0.56));
       c.style.setProperty("--w", Math.round(w) + "px");
       c.style.setProperty("--fh", Math.round(w / r) + "px");
     });
-    intro = H * 1.15;
-    step = Math.max(H * 0.62, 420);
-    spacing = phone ? W * 0.66 : Math.min(W * 0.31, 480);
-    depth = phone ? 170 : 300;
-    stage.style.height = Math.round(H + intro + step * (n - 1) + H * 0.3) + "px";
+    intro = H * 0.6;
+    step = Math.max(H * 0.3, 210);
+    spacing = phone ? W * 0.62 : Math.min(W * 0.27, 430);
+    depth = phone ? 300 : 560;
+    stage.style.height = Math.round(H + intro + step * (n - 1) + H * 0.12) + "px";
     cur = -1;
   }
 
   function apply(y) {
     var a = clamp(y / intro, 0, 1);
-    var g = clamp((y - intro) / step, 0, n - 1);
+    var raw = clamp((y - intro) / step, 0, n - 1), base = Math.floor(raw), fr = raw - base;
+    // 작품마다 잠깐 정면으로 멈췄다가 넘어갑니다.
+    var g = base + fr * fr * fr * (fr * (fr * 6 - 15) + 10);
 
     // 제목은 카메라 쪽으로 다가오다 지나갑니다.
-    var k = clamp(y / (intro * 0.56), 0, 1), kk = ease(k);
+    var k = clamp(y / (intro * 0.42), 0, 1), kk = ease(k);
     hero.style.opacity = (1 - kk).toFixed(3);
     hero.style.transform = "translate3d(0," + (-kk * 40).toFixed(1) + "px," + (kk * 520).toFixed(1) + "px)";
     hero.style.visibility = k >= 1 ? "hidden" : "visible";
@@ -47,18 +49,19 @@ window.initGallery = function (stage) {
     for (var i = 0; i < n; i++) {
       var c = cards[i], d = i - g, ad = Math.abs(d);
       // 가까운 카드부터 차례로 멀리서 날아옵니다.
-      var ai = ease(clamp((a - 0.1 - ad * 0.08) / 0.78, 0, 1));
+      var ai = ease(clamp((a - 0.03 - ad * 0.06) / 0.55, 0, 1));
       var x = d * spacing * (0.3 + 0.7 * ai);
-      var z = -ad * depth - (1 - ai) * 2600 + Math.max(0, 1 - ad) * 70;
-      var yy = (1 - ai) * 70 + Math.pow(ad, 1.2) * 12;
-      var ry = clamp(-d * 36, -64, 64) * (0.35 + 0.65 * ai);
-      var rx = (1 - ai) * 26;
-      var o = clamp(ai * 2.2, 0, 1) * clamp(3.7 - ad, 0, 1);
-      c.style.transform = "translate3d(" + x.toFixed(1) + "px," + yy.toFixed(1) + "px," + z.toFixed(1) + "px) rotateY(" + ry.toFixed(2) + "deg) rotateX(" + rx.toFixed(2) + "deg)";
+      var z = -Math.pow(ad, 1.15) * depth - (1 - ai) * 3600 + Math.max(0, 1 - ad) * 50;
+      var yy = (1 - ai) * 110 + Math.pow(ad, 1.3) * 22;
+      var ry = clamp(-d * 56, -74, 74) * (0.45 + 0.55 * ai);
+      var rx = (1 - ai) * 38 + Math.min(ad, 2) * 2.5;
+      var rz = clamp(d * 2.6, -7, 7) * ai;
+      var o = clamp(ai * 3, 0, 1) * clamp(3.7 - ad, 0, 1);
+      c.style.transform = "translate3d(" + x.toFixed(1) + "px," + yy.toFixed(1) + "px," + z.toFixed(1) + "px) rotateY(" + ry.toFixed(2) + "deg) rotateX(" + rx.toFixed(2) + "deg) rotateZ(" + rz.toFixed(2) + "deg)";
       c.style.opacity = o.toFixed(3);
       c.style.visibility = o <= 0.001 ? "hidden" : "visible";
       c.style.pointerEvents = o > 0.5 && ai > 0.7 ? "auto" : "none";
-      c.style.setProperty("--shade", clamp(ad * 0.34 + (1 - ai) * 0.5, 0, 0.74).toFixed(3));
+      c.style.setProperty("--shade", clamp(ad * 0.42 + (1 - ai) * 0.5, 0, 0.8).toFixed(3));
       c.style.setProperty("--cap", clamp(1.15 - ad * 1.5, 0, 1).toFixed(3));
 
       var v = c.querySelector("video");
@@ -90,7 +93,7 @@ window.initGallery = function (stage) {
     var next = cur < 0 ? target : cur + (target - cur) * (W < 800 ? 0.24 : 0.13);
     if (Math.abs(target - next) < 0.2) next = target;
     mx += (tx - mx) * 0.06; my += (ty - my) * 0.06;
-    deck.style.transform = "rotateY(" + (mx * 3.2).toFixed(2) + "deg) rotateX(" + (-my * 2.4).toFixed(2) + "deg)";
+    deck.style.transform = "rotateY(" + (mx * 6).toFixed(2) + "deg) rotateX(" + (-my * 4.5).toFixed(2) + "deg)";
     if (next !== cur) { cur = next; apply(Math.max(0, cur)); }
   }
 

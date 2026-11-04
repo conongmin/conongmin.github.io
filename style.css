@@ -59,7 +59,7 @@ main { position: relative; z-index: 1; }
 
 /* 스크롤 연동 3D 전시 */
 .stage { position: relative; }
-.pin { position: sticky; top: 0; height: 100svh; overflow: hidden; perspective: 1300px; perspective-origin: 50% 50%; }
+.pin { position: sticky; top: 0; height: 100svh; overflow: hidden; perspective: 820px; perspective-origin: 50% 46%; }
 .pin .hero { position: absolute; inset: 0; min-height: 0; padding-top: 64px; z-index: 3; will-change: transform, opacity; }
 .deck { position: absolute; inset: 0; transform-style: preserve-3d; z-index: 2; }
 .deck .card {
