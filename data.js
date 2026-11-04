@@ -3,7 +3,8 @@
 window.PORTFOLIO = {
   name: "노호민",
   role: "VIDEO CREATOR",
-  lead: "메시지를 먼저 설계하고, 기획부터 편집까지 직접 완성합니다.",
+  eyebrow: "기획부터 촬영, AI, 편집까지",
+  lead: "메시지를 먼저 설계하고, 끝까지 직접 완성합니다",
   email: "nhm527@naver.com",
   results: [
     { big: "우수상", text: "제7회 하이라이트TV AI 공모전 숏폼 부문" },
