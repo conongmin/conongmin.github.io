@@ -93,8 +93,8 @@ window.PORTFOLIO = {
     {
       id: "mayi", title: "May I, AI — 알고말고!", badge: "뮤직비디오", kind: "AI 뮤직비디오", ratio: "16:9", length: "39초",
       videos: [{ file: "mayi", youtube: "" }],
-      context: "「모두의 프로듀서」 공모전용 제작",
-      result: "공모전용 제작",
+      context: "「모두의 프로듀서」 공모전",
+      result: "출품",
       role: "기획, AI 생성, 타이포그래피, 편집 (음원과 캐릭터는 제공 자료)",
       tools: "Claude, Whisper, Nano Banana, Kling, Gemini TTS, Remotion",
       points: [
