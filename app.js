@@ -5,6 +5,8 @@
   var pendingScroll = null;
   var firstHome = true;
   var observers = [];
+  var gallery = null;
+  var homeScroll = null;
 
   // 글자를 쪼개 시간차로 올라오게 합니다. 줄바꿈은 낱말 단위로 유지합니다.
   function splitTitle(text, accent) {
@@ -64,21 +66,28 @@
     var r = w.ratio === "9:16" ? "0.5625" : "1.7778";
     var f = w.videos[0].file;
     var win = /상$/.test(w.result) ? " win" : "";
-    return '<a class="card" data-reveal style="--r:' + r + ';--d:' + Math.min(idx, 5) * 90 + 'ms" href="#/works/' + w.id + '">' +
+    var attrs = calm ? 'data-reveal style="--r:' + r + ';--d:' + Math.min(idx, 5) * 90 + 'ms"' : 'data-r="' + r + '" data-title="' + esc(w.title) + '" style="--r:' + r + '"';
+    return '<a class="card" ' + attrs + ' href="#/works/' + w.id + '">' +
       '<span class="frame"><img src="media/' + f + '.jpg" alt="">' +
       '<video data-src="media/' + f + '-preview.mp4" muted loop playsinline preload="none"></video>' +
-      '<span class="badge' + win + '">' + esc(w.badge) + '</span></span>' +
+      '<span class="shade"></span><span class="badge' + win + '">' + esc(w.badge) + '</span></span>' +
       '<h3>' + esc(w.title) + '</h3><p>' + esc(w.kind) + ' · ' + esc(w.length) + '</p></a>';
   }
 
   function home() {
-    app.innerHTML =
-      '<div class="hero' + (firstHome && !calm ? " play" : " still") + '"><p class="eyebrow">' + esc(D.eyebrow) + '</p>' +
+    var heroHtml = '<div class="hero' + (firstHome && !calm ? " play" : " still") + '"><p class="eyebrow">' + esc(D.eyebrow) + '</p>' +
       '<h1 aria-label="' + esc(D.lead) + '">' + splitTitle(D.lead, "메시지") + '</h1>' +
-      '<div class="cta"><a href="#/" data-go="works">작품 보기</a><a href="' + esc(D.channel) + '" target="_blank" rel="noopener">유튜브 채널 ↗</a></div></div>' +
-      '<section id="works" class="rail-wrap" aria-label="작품">' +
-      '<div class="rail">' + D.works.map(card).join("") + '</div>' +
-      '<button class="arrow prev" aria-label="이전 작품">‹</button><button class="arrow next" aria-label="다음 작품">›</button></section>' +
+      '<div class="cta"><a href="#/" data-go="works">작품 보기</a><a href="' + esc(D.channel) + '" target="_blank" rel="noopener">유튜브 채널 ↗</a></div>' +
+      (calm ? '' : '<div class="cue" aria-hidden="true"><span>스크롤</span><i></i></div>') + '</div>';
+    var worksHtml = calm ?
+      heroHtml + '<section id="works" class="rail-wrap" aria-label="작품"><div class="rail">' + D.works.map(card).join("") + '</div>' +
+      '<button class="arrow prev" aria-label="이전 작품">‹</button><button class="arrow next" aria-label="다음 작품">›</button></section>' :
+      '<section id="works" class="stage" aria-label="작품"><div class="pin">' + heroHtml +
+      '<div class="deck">' + D.works.map(card).join("") + '</div>' +
+      '<div class="counter" aria-hidden="true"><span class="num"></span><span class="name"></span><span class="bar"><i></i></span></div>' +
+      '</div></section>';
+    if (gallery) { gallery.destroy(); gallery = null; }
+    app.innerHTML = worksHtml +
       '<section class="block"><h2>결과</h2><div class="results">' +
       D.results.map(function (r, i) { return '<div data-reveal style="--d:' + i * 130 + 'ms"><strong>' + popChars(r.big) + '</strong><span>' + esc(r.text) + '</span></div>'; }).join("") +
       '</div></section>' +
@@ -99,27 +108,24 @@
     if (heroEl) setTimeout(function () { heroEl.classList.add("done"); }, 2600);
     watch(); bindScrub();
     var go = app.querySelector("[data-go]");
-    if (go) go.addEventListener("click", function (e) { e.preventDefault(); app.querySelector("#works").scrollIntoView(); });
-    var rail = app.querySelector(".rail");
-    function step(dir) { rail.scrollBy({ left: dir * Math.max(320, rail.clientWidth * 0.6), behavior: calm ? "auto" : "smooth" }); }
-    app.querySelector(".prev").onclick = function () { step(-1); };
-    app.querySelector(".next").onclick = function () { step(1); };
-
-    if (!calm && "IntersectionObserver" in window) {
-      var io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) {
-          var v = e.target;
-          if (e.isIntersecting) {
-            if (!v.src) v.src = v.dataset.src;
-            var p = v.play(); if (p && p.catch) p.catch(function () {});
-          } else { v.pause(); }
-        });
-      }, { threshold: 0.5 });
-      app.querySelectorAll(".card video").forEach(function (v) {
-        v.addEventListener("error", function () { v.remove(); });
-        io.observe(v);
+    if (go) go.addEventListener("click", function (e) { e.preventDefault(); goTo("works", true); });
+    if (calm) {
+      var rail = app.querySelector(".rail");
+      var step = function (dir) { rail.scrollBy({ left: dir * Math.max(320, rail.clientWidth * 0.6), behavior: "auto" }); };
+      app.querySelector(".prev").onclick = function () { step(-1); };
+      app.querySelector(".next").onclick = function () { step(1); };
+    } else {
+      gallery = window.initGallery(app.querySelector(".stage"));
+      app.querySelectorAll(".deck .card").forEach(function (c) {
+        c.addEventListener("click", function () { homeScroll = window.scrollY; });
       });
     }
+  }
+
+  function goTo(id, smooth) {
+    if (id === "works" && gallery) { window.scrollTo({ top: gallery.startY(), behavior: smooth ? "smooth" : "instant" }); return; }
+    var t = document.getElementById(id);
+    if (t) t.scrollIntoView({ behavior: smooth ? "smooth" : "instant" });
   }
 
   function player(v, w) {
@@ -139,6 +145,7 @@
     if (w.tools) rows.push(["툴", w.tools]);
     if (window.setKineticLevel) window.setKineticLevel(0.45);
     firstHome = false;
+    if (gallery) { gallery.destroy(); gallery = null; }
     app.innerHTML = '<article class="detail enter">' +
       '<div class="players ' + (w.ratio === "9:16" ? "tall" : "wide") + '">' + w.videos.map(function (v) { return player(v, w); }).join("") + '</div>' +
       '<div><a class="back" href="#/">← 전체 작품</a><h1>' + esc(w.title) + '</h1><p class="kind">' + esc(w.badge) + '</p><dl>' +
@@ -150,7 +157,7 @@
     var enterEl = app.querySelector(".detail.enter");
     if (enterEl) setTimeout(function () { enterEl.classList.remove("enter"); }, 1600);
     document.title = w.title + " · 노호민 포트폴리오";
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "instant" });
   }
 
   function route() {
@@ -158,10 +165,9 @@
     if (m) { detail(m[1]); return; }
     document.title = "노호민 포트폴리오";
     home();
-    if (pendingScroll) {
-      var t = document.getElementById(pendingScroll); pendingScroll = null;
-      if (t) t.scrollIntoView();
-    } else { window.scrollTo(0, 0); }
+    if (pendingScroll) { var id = pendingScroll; pendingScroll = null; goTo(id, false); }
+    else if (homeScroll !== null) { window.scrollTo({ top: homeScroll, behavior: "instant" }); homeScroll = null; }
+    else { window.scrollTo({ top: 0, behavior: "instant" }); }
   }
 
   document.querySelectorAll("[data-scroll]").forEach(function (a) {
@@ -169,10 +175,13 @@
       e.preventDefault();
       var id = a.dataset.scroll;
       var onHome = !/^#\/works\//.test(location.hash);
-      if (onHome) { var t = document.getElementById(id); if (t) t.scrollIntoView(); }
+      if (onHome) { goTo(id, true); }
       else { pendingScroll = id; location.hash = "#/"; }
     });
   });
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  var brand = document.querySelector(".brand");
+  if (brand) brand.addEventListener("click", function () { homeScroll = null; if (!/^#\/works\//.test(location.hash)) window.scrollTo({ top: 0, behavior: "smooth" }); });
   window.addEventListener("hashchange", route);
   route();
 })();

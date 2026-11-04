@@ -57,6 +57,28 @@ main { position: relative; z-index: 1; }
 @keyframes softUp { to { opacity: 1; transform: none; } }
 @keyframes ctaIn { to { opacity: 1; transform: none; } }
 
+/* 스크롤 연동 3D 전시 */
+.stage { position: relative; }
+.pin { position: sticky; top: 0; height: 100svh; overflow: hidden; perspective: 1300px; perspective-origin: 50% 50%; }
+.pin .hero { position: absolute; inset: 0; min-height: 0; padding-top: 64px; z-index: 3; will-change: transform, opacity; }
+.deck { position: absolute; inset: 0; transform-style: preserve-3d; z-index: 2; }
+.deck .card {
+  position: absolute; left: 50%; top: 50%; width: var(--w); margin-left: calc(var(--w) / -2); margin-top: calc(var(--fh) / -2 - 4px);
+  transform-style: preserve-3d; backface-visibility: hidden; will-change: transform, opacity; visibility: hidden;
+}
+.deck .card .frame { height: var(--fh); }
+.frame .shade { position: absolute; inset: 0; background: #0b0a09; opacity: var(--shade, 0); pointer-events: none; }
+.deck .card h3, .deck .card p { opacity: var(--cap, 0); text-align: center; }
+.deck .card h3 { font-size: clamp(16px, 1.6vw, 21px); }
+.counter { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 22px; z-index: 4; display: flex; align-items: center; gap: 14px; font-size: 13px; color: var(--muted); opacity: 0; pointer-events: none; }
+.counter .num { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+.counter .name { display: none; }
+.counter .bar { flex: 1; height: 1px; background: var(--line); }
+.counter .bar i { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); }
+.cue { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .08em; color: var(--muted); }
+.cue i { display: block; width: 1px; height: 34px; background: linear-gradient(var(--accent), var(--accent)) top / 100% 40% no-repeat, var(--line); animation: cueRun 1.8s cubic-bezier(.7, 0, .3, 1) infinite; }
+@keyframes cueRun { from { background-position: 0 -14px, 0 0; } to { background-position: 0 40px, 0 0; } }
+
 /* 스크롤 등장: 구역마다 다른 움직임 */
 .card[data-reveal] .frame { clip-path: inset(100% 0 0 0 round 6px); transition: clip-path 1s cubic-bezier(.7, 0, .15, 1) var(--d, 0s); }
 .card[data-reveal] .frame > img, .card[data-reveal] .frame > video { transform: scale(1.16); transition: transform 1.5s cubic-bezier(.2, .7, .2, 1) var(--d, 0s); }
