@@ -41,6 +41,19 @@ window.PORTFOLIO = {
       ]
     },
     {
+      id: "redred", yt: "watch?v=q-c1f-NS2ik", title: "REDRED", badge: "키네틱 타이포", kind: "키네틱 타이포그래피", ratio: "16:9", length: "30초",
+      videos: [{ file: "redred", youtube: "q-c1f-NS2ik" }],
+      context: "CORTIS 「REDRED」 가사 타이포그래피 (개인 작업, 음원 권리는 원저작자에게 있음)",
+      result: "제작 완료",
+      role: "연출, 타이포그래피, 편집",
+      tools: "After Effects, Claude",
+      points: [
+        "가사를 낱말 단위로 박자에 맞춰 움직인 타이포 영상입니다.",
+        "Claude로 박자와 낱말별 시간을 분석하고, After Effects 스크립트로 키프레임을 만들었습니다.",
+        "장면마다 글자의 움직임과 화면 전환을 정하고, 결과를 보며 8번째 버전까지 고쳤습니다."
+      ]
+    },
+    {
       id: "varo", title: "바로피트니스 홍보 숏폼", badge: "직접 촬영", kind: "홍보 숏폼", ratio: "9:16", length: "50초",
       videos: [{ file: "varo", youtube: "" }],
       context: "헬스장 공간과 시설 소개",
